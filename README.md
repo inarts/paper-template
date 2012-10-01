@@ -1,7 +1,7 @@
 Template for papers
 ===================
 
-This is my personal paper template. I have developed it when writing my
+This is my personal paper template. I  developed it when writing my
 PhD thesis and it has proven useful in many occasions (project proposals,
 papers, technical reports etc.)
 
@@ -13,9 +13,9 @@ figures in order to convert them to PDF files, suitable for use by
 
 * `.eps` files are converted to PDF using the `epstopdf` program
 * `.dot` files are converted to PDF using the [Graphiz](http://www.graphviz.org/) program.
-* `.dat` files are combined with `.plot` files and fed to [Gnuplot](http://www.gnuplot.info/) to produce `.eps` files. Both files must have the
-same suffix. By convention, data are stored in `.dat` files while plotting
-instructions are stored in `.plot` files.
+* `.dat` files are combined with `.plot` files and fed to [Gnuplot](http://www.gnuplot.info/) 
+to produce `.eps` files. Both files must have the same suffix. By convention, 
+data are stored in `.dat` files while plotting instructions are stored in `.plot` files.
 
 Bibliography is handled as follows: 
 
