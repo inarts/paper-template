@@ -29,6 +29,9 @@ DOT?=dot
 # epstopdf conversion
 EPSTOPDF?=epstopdf
 
+# pybcompact location
+PYBCOMPACT?=bin/pybcompact.py
+
 ## Filename substitutions for genetated files
 
 # Output file
@@ -100,7 +103,7 @@ $(BUILD)/$(MASTERTEX).aux: $(TEXFILES_DEST) $(PICTURES_DEST)
 # Bibliography
 $(BUILD)/$(MASTERTEX).bib: $(BUILD)/$(MASTERTEX).aux
 	cd $(BUILD) && \
-	./bin/pybcompact.py $(MASTERTEX).aux $(PAPERPATH) > `basename $(BUILD)/$(MASTERTEX).bib`
+	$(PYBCOMPACT) $(MASTERTEX).aux $(PAPERPATH) > `basename $(BUILD)/$(MASTERTEX).bib`
 
 $(BUILD)/$(MASTERTEX).bbl: $(BUILD)/$(MASTERTEX).bib $(BUILD)/$(MASTERTEX).aux
 	cd $(BUILD) && \
