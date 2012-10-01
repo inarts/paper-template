@@ -1,6 +1,7 @@
 #! /usr/bin/env python
+# Original code by Adriaan de Groot. 
 #
-# $Id: pybcompact,v 1.5 2004/11/12 11:49:46 adridg Exp $
+# Disributed under the BSD license
 #
 # Extract only those entries from a set of bibtex files that are cited in
 # a latex document, and write those to standard output.

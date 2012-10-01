@@ -1,4 +1,6 @@
-# $Id#
+# Original code by Adriaan de Groot. 
+#
+# Disributed under the BSD license
 #
 # Functions to parse TeX/LaTeX aux files
 
