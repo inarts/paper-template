@@ -1,9 +1,9 @@
 # Makefile for complex Latex documents
 #
-# (c) 2012 - Georgios Gousios <gousiosg@gmail.com>
+# (c) 2009-2012 -- Georgios Gousios <gousiosg@gmail.com>
 
 ## Inputs
-# Name of master file (without .tex extension)
+# Name of master file (without the .tex extension)
 MASTERTEX=paper
 
 # Where is the output dir?
@@ -11,6 +11,9 @@ BUILD=build
 
 # Where is the latex input dir
 LATEXDIR=latex
+
+# Where should biblio.py look for papers
+PAPERPATH=~/Documents/biblists
 
 ## Binaries. Can be overriden at make invocation time
 
@@ -55,9 +58,6 @@ $(PLOT_PDFS) : $(PLOT_SRC_FILES) $(PLOT_DATA_FILES)
 # Files for figures, in PDF format
 PDFFILES := $(foreach dir,$(PICS),$(wildcard $(dir)/*.pdf))
 
-# Files for figures, in PNG format
-PNGFILES := $(foreach dir,$(PICS),$(wildcard $(dir)/*.png))
-
 # Figure names in build dir
 PICTURES_SRC := $(EPSFILES_PDF) $(PLOT_PDFS)
 PICTURES_DEST := $(addprefix $(BUILD)/, $(notdir $(PICTURES_SRC) $(PDFFILES) $(PNGFILES))) 
@@ -98,11 +98,11 @@ $(BUILD)/$(MASTERTEX).aux: $(TEXFILES_DEST) $(PICTURES_DEST)
 	$(LATEX) $(MASTERTEX).tex 
 
 # Bibliography
-$(BIBLIOGRAPHYFILE): $(BUILD)/$(MASTERTEX).aux 
+$(BUILD)/$(MASTERTEX).bib: $(BUILD)/$(MASTERTEX).aux
 	cd $(BUILD) && \
-	pybcompact.py $(MASTERTEX).aux $(PAPERPATH) > `basename $(BIBLIOGRAPHYFILE)`
+	./bin/pybcompact.py $(MASTERTEX).aux $(PAPERPATH) > `basename $(BUILD)/$(MASTERTEX).bib`
 
-$(BUILD)/$(MASTERTEX).bbl: $(BIBLIOGRAPHYFILE) $(BUILD)/$(MASTERTEX).aux
+$(BUILD)/$(MASTERTEX).bbl: $(BUILD)/$(MASTERTEX).bib $(BUILD)/$(MASTERTEX).aux
 	cd $(BUILD) && \
 	bibtex $(MASTERTEX) 
 
