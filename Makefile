@@ -33,7 +33,7 @@ DOT?=dot
 EPSTOPDF?=epstopdf
 
 # pybcompact location
-PYBCOMPACT?=bin/pybcompact.py
+PYBCOMPACT?=../bin/pybcompact.py
 
 ## Filename substitutions for genetated files
 
@@ -45,7 +45,9 @@ TEXFILES_SRC:=$(wildcard $(LATEXDIR)/*.tex) $(wildcard $(LATEXDIR)/*.cls) $(wild
 TEXFILES_DEST := $(addprefix $(BUILD)/, $(notdir $(TEXFILES_SRC)))
 
 # Bib file
-BIB=$(patsubst %.tex,%,${TEXFILE})
+# Bib file
+BIBFILE=$(patsubst %, %.bib, $(MASTERTEX))
+BIBFILE_DEST=$(addprefix $(BUILD)/, $(notdir $(BIBFILE)))
 
 # Latex aux file
 AUXFILE=$(patsubst %.tex,%.aux,${TEXFILE})
@@ -107,10 +109,14 @@ $(BUILD)/$(MASTERTEX).aux: $(TEXFILES_DEST) $(PICTURES_DEST)
 	cd $(BUILD) && \
 	$(LATEX) $(MASTERTEX).tex 
 
-# Bibliography
-$(BUILD)/$(MASTERTEX).bib: $(BUILD)/$(MASTERTEX).aux
+# Bibfile: copy from src dir if exists, otherwise call pybcompact
+$(BIBFILE_DEST): $(BUILD)/$(MASTERTEX).aux
+ifeq ($(wildcard $(LATEXDIR)/*.bib),)
 	cd $(BUILD) && \
-	$(PYBCOMPACT) $(MASTERTEX).aux $(PAPERPATH) > `basename $(BUILD)/$(MASTERTEX).bib`
+		$(PYBCOMPACT) $(MASTERTEX).aux $(PAPERPATH) > `basename $(BUILD)/$(MASTERTEX).bib`
+else
+	cp $(LATEXDIR)/$(@F) $@
+endif
 
 $(BUILD)/$(MASTERTEX).bbl: $(BUILD)/$(MASTERTEX).bib $(BUILD)/$(MASTERTEX).aux
 	cd $(BUILD) && \
